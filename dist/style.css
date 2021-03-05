@@ -26,4 +26,6 @@ div {
   background-color: aqua;
   padding: 20px;
   background-clip: content-box;
+  background-position: center center;
+  background-size: contain;
 }
