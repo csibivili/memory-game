@@ -3,10 +3,22 @@ import { Card } from './Card';
 export class Game {
   static nrOfFlippedCards: number = 0;
   private cards: Card[] = [];
+  private area: HTMLElement = document.getElementById('game-area');
 
   initialize(): void {
     this.renderCards();
     this.fillPhotosInRandomOrder();
+
+    this.area.addEventListener(
+      'flipback',
+      () => {
+        setTimeout(() => {
+          this.cards.filter((c) => c.getFlipped()).forEach((c) => c.flipBack());
+          Game.nrOfFlippedCards = 0;
+        }, 1000);
+      },
+      false
+    );
   }
 
   private renderCards(): void {
@@ -14,7 +26,7 @@ export class Game {
 
     for (let index: number = 0; index < 15; index++) {
       const clone: Node = cardElement.cloneNode(true);
-      document.getElementById('game-area').appendChild(clone);
+      this.area.appendChild(clone);
     }
   }
 
@@ -27,15 +39,16 @@ export class Game {
       .map((n) => n.order);
 
     for (let index: number = 1; index <= cards.length; index += 2) {
-      const card1: Card = new Card(cards[index - 1]);
+      const card1: Card = new Card(cards[index - 1], this.area);
       card1.setOrder(order[index - 1]);
       card1.setImage(index);
 
-      const card2: Card = new Card(cards[index]);
+      const card2: Card = new Card(cards[index], this.area);
       card2.setOrder(order[index]);
       card2.setImage(index);
 
-      this.cards.concat([card1, card2]);
+      this.cards.push(card1);
+      this.cards.push(card2);
     }
   }
 
