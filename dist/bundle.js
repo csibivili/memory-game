@@ -15,7 +15,7 @@
   \**********************/
 /***/ (() => {
 
-eval("function greeter(person) {\n    return \"Hellobello, \".concat(person);\n}\ndocument.body.textContent = greeter('Viadsai');\n\n\n//# sourceURL=webpack://memory-game/./src/index.ts?");
+eval("const cardElement = document.querySelector('.card');\nfor (let index = 0; index < 15; index++) {\n    const clone = cardElement.cloneNode();\n    document.getElementById('game-area').appendChild(clone);\n}\n\n\n//# sourceURL=webpack://memory-game/./src/index.ts?");
 
 /***/ })
 

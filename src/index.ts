@@ -1,6 +1,6 @@
+const cardElement = document.querySelector('.card');
 
-function greeter(person: string): string {
-  return "Hellobello, ".concat(person);
+for (let index: number = 0; index < 15; index++) {
+  const clone = cardElement.cloneNode();
+  document.getElementById('game-area').appendChild(clone);
 }
-
-document.body.textContent = greeter('Viadsai');
