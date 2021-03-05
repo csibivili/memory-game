@@ -8,16 +8,31 @@ div {
   display: flex;
 }
 
+button {
+  margin-top: 10px;
+  outline: none;
+  border: 2px solid #080808;
+  padding: 0.5rem;
+  border-radius: 4px;
+  color: #080808;
+  background: transparent;
+}
+
+button:hover {
+  background: #080808;
+  color: #ffffff;
+}
+
 .container {
   min-height: 100vh;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 #game-area {
   min-width: 800px;
   min-height: 600px;
-  background-color: black;
   flex-wrap: wrap;
 }
 
@@ -34,10 +49,10 @@ div {
   text-align: center;
   transition: transform 0.6s;
   transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
 }
 
-.flip-card.flipped .flip-card-inner {
+.flip-card:hover .flip-card-inner {
   transform: rotateY(180deg);
 }
 
@@ -51,8 +66,7 @@ div {
 }
 
 .flip-card-front {
-  background-color: #bbb;
-  color: black;
+  background-color: #080808;
 }
 
 .flip-card-back {

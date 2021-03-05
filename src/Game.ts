@@ -8,17 +8,14 @@ export class Game {
   initialize(): void {
     this.renderCards();
     this.fillPhotosInRandomOrder();
+  }
 
-    this.area.addEventListener(
-      'flipback',
-      () => {
-        setTimeout(() => {
-          this.cards.filter((c) => c.getFlipped()).forEach((c) => c.flipBack());
-          Game.nrOfFlippedCards = 0;
-        }, 1000);
-      },
-      false
-    );
+  reorder(): void {
+    const newOrder: number[] = this.getRandomOrder();
+    for (let index: number = 1; index <= this.cards.length; index += 2) {
+      this.cards[index - 1].setOrder(newOrder[index - 1]);
+      this.cards[index].setOrder(newOrder[index]);
+    }
   }
 
   private renderCards(): void {
@@ -32,11 +29,7 @@ export class Game {
 
   private fillPhotosInRandomOrder(): void {
     const cards: NodeListOf<HTMLDivElement> = this.getCards();
-    const order: number[] = new Array(16)
-      .fill(0)
-      .map((_, i) => ({ order: i + 1, sort: Math.random() }))
-      .sort((a, b) => a.sort - b.sort)
-      .map((n) => n.order);
+    const order: number[] = this.getRandomOrder();
 
     for (let index: number = 1; index <= cards.length; index += 2) {
       const card1: Card = new Card(cards[index - 1], this.area);
@@ -50,6 +43,14 @@ export class Game {
       this.cards.push(card1);
       this.cards.push(card2);
     }
+  }
+
+  private getRandomOrder(): number[] {
+    return new Array(16)
+      .fill(0)
+      .map((_, i) => ({ order: i + 1, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map((n) => n.order);
   }
 
   private getCards(): NodeListOf<HTMLDivElement> {
