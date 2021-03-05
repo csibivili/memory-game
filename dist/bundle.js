@@ -15,7 +15,7 @@
   \**********************/
 /***/ (() => {
 
-eval("const cardElement = document.querySelector('.card');\nfor (let index = 0; index < 15; index++) {\n    const clone = cardElement.cloneNode(true);\n    document.getElementById('game-area').appendChild(clone);\n}\nconst cards = document.querySelectorAll('.card');\nfor (const card of cards) {\n    card.style.backgroundImage = 'url(../dist/assets/1.jpg)';\n}\n\n\n//# sourceURL=webpack://memory-game/./src/index.ts?");
+eval("const cardElement = document.querySelector('.card');\nfor (let index = 0; index < 15; index++) {\n    const clone = cardElement.cloneNode(true);\n    document.getElementById('game-area').appendChild(clone);\n}\nconst cards = document.querySelectorAll('.card');\nfor (let index = 1; index <= cards.length; index += 2) {\n    cards[index - 1].style.backgroundImage = `url(../dist/assets/${Math.round(index / 2)}.jpg)`;\n    cards[index].style.backgroundImage = `url(../dist/assets/${Math.round(index / 2)}.jpg)`;\n}\n\n\n//# sourceURL=webpack://memory-game/./src/index.ts?");
 
 /***/ })
 

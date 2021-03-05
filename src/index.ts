@@ -7,6 +7,7 @@ for (let index: number = 0; index < 15; index++) {
 
 const cards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card');
 
-for (const card of cards) {
-  card.style.backgroundImage = 'url(../dist/assets/1.jpg)';
+for (let index: number = 1; index <= cards.length; index += 2) {
+  cards[index - 1].style.backgroundImage = `url(../dist/assets/${Math.round(index / 2)}.jpg)`;
+  cards[index].style.backgroundImage = `url(../dist/assets/${Math.round(index / 2)}.jpg)`;
 }
