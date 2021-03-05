@@ -1,8 +1,12 @@
-import { Game } from './Game';
+import { Board } from './Board';
 
-const game = new Game();
-game.initialize();
+const board = new Board();
+board.initialize();
 
-document.querySelector('button').addEventListener('click', () => {
-  game.reorder();
+document.getElementById('shuffle').addEventListener('click', () => {
+  board.reorder();
+});
+
+document.getElementById('flip').addEventListener('click', () => {
+  board.flip();
 });

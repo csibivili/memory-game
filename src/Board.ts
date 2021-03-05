@@ -1,7 +1,6 @@
 import { Card } from './Card';
 
-export class Game {
-  static nrOfFlippedCards: number = 0;
+export class Board {
   private cards: Card[] = [];
   private area: HTMLElement = document.getElementById('game-area');
 
@@ -18,6 +17,10 @@ export class Game {
     }
   }
 
+  flip(): void {
+    this.cards.forEach((c) => c.flip());
+  }
+
   private renderCards(): void {
     const cardElement: HTMLDivElement = document.querySelector('.flip-card');
 
@@ -32,11 +35,11 @@ export class Game {
     const order: number[] = this.getRandomOrder();
 
     for (let index: number = 1; index <= cards.length; index += 2) {
-      const card1: Card = new Card(cards[index - 1], this.area);
+      const card1: Card = new Card(cards[index - 1]);
       card1.setOrder(order[index - 1]);
       card1.setImage(index);
 
-      const card2: Card = new Card(cards[index], this.area);
+      const card2: Card = new Card(cards[index]);
       card2.setOrder(order[index]);
       card2.setImage(index);
 
