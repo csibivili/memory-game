@@ -1,3 +1,5 @@
+import { Game } from './Game';
+
 export class Card {
   private flipped: boolean = false;
   private htmlElement: HTMLDivElement = null;
@@ -17,8 +19,12 @@ export class Card {
   }
 
   private addListener(): void {
-    this.htmlElement.addEventListener('click', function () {
-      this.classList.add('flipped');
+    this.htmlElement.addEventListener('click', () => {
+      if (!this.flipped && Game.nrOfFlippedCards < 2) {
+        this.htmlElement.classList.add('flipped');
+        this.flipped = !this.flipped;
+        Game.nrOfFlippedCards++;
+      }
     });
   }
 }

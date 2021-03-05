@@ -1,6 +1,9 @@
 import { Card } from './Card';
 
 export class Game {
+  static nrOfFlippedCards: number = 0;
+  private cards: Card[] = [];
+
   initialize(): void {
     this.renderCards();
     this.fillPhotosInRandomOrder();
@@ -31,6 +34,8 @@ export class Game {
       const card2: Card = new Card(cards[index]);
       card2.setOrder(order[index]);
       card2.setImage(index);
+
+      this.cards.concat([card1, card2]);
     }
   }
 
