@@ -10,13 +10,23 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/Card.ts":
+/*!*********************!*\
+  !*** ./src/Card.ts ***!
+  \*********************/
+/***/ ((__unused_webpack_module, exports) => {
+
+eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.Card = void 0;\nclass Card {\n    constructor(htmlElement) {\n        this.flipped = false;\n        this.htmlElement = null;\n        this.htmlElement = htmlElement;\n        this.addListener();\n    }\n    setOrder(order) {\n        this.htmlElement.style.order = String(order);\n    }\n    setImage(index) {\n        const cardBack = this.htmlElement.querySelector('.flip-card-back');\n        cardBack.style.backgroundImage = `url(../dist/assets/${Math.round(index / 2)}.jpg)`;\n    }\n    addListener() {\n        this.htmlElement.addEventListener('click', function () {\n            this.classList.add('flipped');\n        });\n    }\n}\nexports.Card = Card;\n\n\n//# sourceURL=webpack://memory-game/./src/Card.ts?");
+
+/***/ }),
+
 /***/ "./src/Game.ts":
 /*!*********************!*\
   !*** ./src/Game.ts ***!
   \*********************/
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.Game = void 0;\nclass Game {\n    initialize() {\n        this.renderCards();\n        this.fillPhotosInRandomOrder();\n    }\n    renderCards() {\n        const cardElement = document.querySelector('.flip-card');\n        for (let index = 0; index < 15; index++) {\n            const clone = cardElement.cloneNode(true);\n            document.getElementById('game-area').appendChild(clone);\n        }\n    }\n    fillPhotosInRandomOrder() {\n        const cards = document.querySelectorAll('.flip-card');\n        const order = new Array(16)\n            .fill(0)\n            .map((_, i) => ({ order: i + 1, sort: Math.random() }))\n            .sort((a, b) => a.sort - b.sort)\n            .map((n) => n.order);\n        for (let index = 1; index <= cards.length; index += 2) {\n            const card1 = cards[index - 1];\n            const card1Back = card1.querySelector('.flip-card-back');\n            card1Back.style.backgroundImage = `url(../dist/assets/${Math.round(index / 2)}.jpg)`;\n            card1.style.order = String(order[index - 1]);\n            const card2 = cards[index];\n            const card2Back = card2.querySelector('.flip-card-back');\n            card2Back.style.backgroundImage = `url(../dist/assets/${Math.round(index / 2)}.jpg)`;\n            card2.style.order = String(order[index]);\n        }\n    }\n}\nexports.Game = Game;\n\n\n//# sourceURL=webpack://memory-game/./src/Game.ts?");
+eval("\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\nexports.Game = void 0;\nconst Card_1 = __webpack_require__(/*! ./Card */ \"./src/Card.ts\");\nclass Game {\n    initialize() {\n        this.renderCards();\n        this.fillPhotosInRandomOrder();\n    }\n    renderCards() {\n        const cardElement = document.querySelector('.flip-card');\n        for (let index = 0; index < 15; index++) {\n            const clone = cardElement.cloneNode(true);\n            document.getElementById('game-area').appendChild(clone);\n        }\n    }\n    fillPhotosInRandomOrder() {\n        const cards = this.getCards();\n        const order = new Array(16)\n            .fill(0)\n            .map((_, i) => ({ order: i + 1, sort: Math.random() }))\n            .sort((a, b) => a.sort - b.sort)\n            .map((n) => n.order);\n        for (let index = 1; index <= cards.length; index += 2) {\n            const card1 = new Card_1.Card(cards[index - 1]);\n            card1.setOrder(order[index - 1]);\n            card1.setImage(index);\n            const card2 = new Card_1.Card(cards[index]);\n            card2.setOrder(order[index]);\n            card2.setImage(index);\n        }\n    }\n    getCards() {\n        return document.querySelectorAll('.flip-card');\n    }\n}\nexports.Game = Game;\n\n\n//# sourceURL=webpack://memory-game/./src/Game.ts?");
 
 /***/ }),
 
