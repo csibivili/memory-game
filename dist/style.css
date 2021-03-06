@@ -45,7 +45,6 @@ button:hover {
 .flip-card {
   width: 25%;
   padding: 20px;
-  background-clip: content-box;
   transition: order 2s;
 }
 
@@ -69,7 +68,6 @@ button:hover {
   position: absolute;
   width: 100%;
   height: 100%;
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
@@ -78,8 +76,6 @@ button:hover {
 }
 
 .flip-card-back {
-  background-color: #2980b9;
-  color: white;
   transform: rotateY(180deg);
   background-position: center center;
   background-size: cover;
