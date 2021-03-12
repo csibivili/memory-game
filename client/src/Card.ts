@@ -1,9 +1,11 @@
 export class Card {
   private flipped: boolean = false;
   private card: HTMLDivElement = null;
+  private id: number;
 
-  constructor(card: HTMLDivElement) {
+  constructor(card: HTMLDivElement, id: number) {
     this.card = card;
+    this.id = id;
   }
 
   setOrder(order: number): void {

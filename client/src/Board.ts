@@ -20,6 +20,17 @@ export class Board {
       .map((_, i) => ({ order: i + 1, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .forEach((o, i) => this.cards[i].setOrder(o.order));
+
+    const http = new XMLHttpRequest();
+    http.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        // Typical action to be performed when the document is ready:
+        console.log(JSON.parse(http.response));
+      }
+    };
+    http.open('GET', 'http://localhost:5000/shuffle', true);
+    http.setRequestHeader('Content-Type', 'application/json');
+    http.send();
   }
 
   flip(): void {
@@ -39,8 +50,8 @@ export class Board {
     const cards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.flip-card');
 
     for (let index: number = 1; index <= cards.length; index += 2) {
-      const card1: Card = new Card(cards[index - 1]);
-      const card2: Card = new Card(cards[index]);
+      const card1: Card = new Card(cards[index - 1], index - 1);
+      const card2: Card = new Card(cards[index], index);
       card1.setImage(index);
       card2.setImage(index);
       this.cards.push(card1);
