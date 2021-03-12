@@ -17,7 +17,7 @@ export class Card {
           this.flip();
         }
       };
-      http.open('GET', `http://localhost:5000/getOrderByPictureId/${this.id}`, true);
+      http.open('GET', `/api/getOrderByPictureId/${this.id}`, true);
       http.setRequestHeader('Content-Type', 'application/json');
       http.send();
     });

@@ -21,7 +21,7 @@ export class Board {
         this.cards.forEach((c, i) => c.setOrder(response.order[i]));
       }
     };
-    http.open('GET', 'http://localhost:5000/shuffle', true);
+    http.open('GET', '/api/shuffle', true);
     http.setRequestHeader('Content-Type', 'application/json');
     http.send();
   }
