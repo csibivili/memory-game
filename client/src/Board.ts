@@ -20,7 +20,6 @@ export class Board {
       .map((_, i) => ({ order: i + 1, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
       .forEach((o, i) => this.cards[i].setOrder(o.order));
-
     const http = new XMLHttpRequest();
     http.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
@@ -52,8 +51,8 @@ export class Board {
     for (let index: number = 1; index <= cards.length; index += 2) {
       const card1: Card = new Card(cards[index - 1], index - 1);
       const card2: Card = new Card(cards[index], index);
-      card1.setImage(index);
-      card2.setImage(index);
+      //card1.setImage(index);
+      //card2.setImage(index);
       this.cards.push(card1);
       this.cards.push(card2);
     }
