@@ -2,18 +2,19 @@ export class Card {
   private flipped: boolean = false;
   private card: HTMLDivElement = null;
   private id: number;
-  private order: number;
 
   constructor(card: HTMLDivElement, id: number) {
     this.card = card;
     this.id = id;
     this.card.addEventListener('click', () => {
-      this.flip();
       const http = new XMLHttpRequest();
-      http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          // Typical action to be performed when the document is ready:
-          console.log(JSON.parse(http.response));
+      http.onreadystatechange = () => {
+        if (http.readyState == 4 && http.status == 200) {
+          const result = JSON.parse(http.response);
+          if (!this.flipped) {
+            this.setImage(result.pictureId + 1);
+          }
+          this.flip();
         }
       };
       http.open('GET', `http://localhost:5000/getOrderByPictureId/${this.id}`, true);
@@ -23,8 +24,7 @@ export class Card {
   }
 
   setOrder(order: number): void {
-    this.order = order;
-    this.card.style.order = String(this.order);
+    this.card.style.order = String(order);
   }
 
   setImage(index: number): void {

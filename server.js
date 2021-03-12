@@ -8,17 +8,14 @@ const game = require('./game');
 app.use(cors());
 app.use(express.static('client/dist', { index: false }));
 
-app.get('/shuffle', (req, res) => {
-  //console.log(game);
+app.get('/shuffle', (_, res) => {
   game.setOrder();
-  res.send({ message: 'shuffled', order: game.order });
+  res.send({ message: 'shuffled', order: game.pictures.map((p) => p.order) });
 });
 
 app.get('/getOrderByPictureId/:id', (req, res) => {
   const { id } = req.params;
-  console.log(id);
   const result = game.getOrderById(id);
-  console.log(result);
   res.send(result);
 });
 
