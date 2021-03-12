@@ -12,7 +12,7 @@ export class Card {
 
   setImage(index: number): void {
     const cardBack: HTMLDivElement = this.card.querySelector('.flip-card-back');
-    cardBack.style.backgroundImage = `url(../dist/assets/${Math.round(index / 2)}.jpg)`;
+    cardBack.style.backgroundImage = `url(assets/${Math.round(index / 2)}.jpg)`;
   }
 
   flip(): void {
