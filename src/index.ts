@@ -4,7 +4,7 @@ const board = new Board();
 board.initialize();
 
 document.getElementById('shuffle').addEventListener('click', () => {
-  board.reorder();
+  board.shuffle();
 });
 
 document.getElementById('flip').addEventListener('click', () => {

@@ -1,26 +1,26 @@
 export class Card {
   private flipped: boolean = false;
-  private htmlElement: HTMLDivElement = null;
+  private card: HTMLDivElement = null;
 
-  constructor(htmlElement: HTMLDivElement) {
-    this.htmlElement = htmlElement;
+  constructor(card: HTMLDivElement) {
+    this.card = card;
   }
 
   setOrder(order: number): void {
-    this.htmlElement.style.order = String(order);
+    this.card.style.order = String(order);
   }
 
   setImage(index: number): void {
-    const cardBack: HTMLDivElement = this.htmlElement.querySelector('.flip-card-back');
+    const cardBack: HTMLDivElement = this.card.querySelector('.flip-card-back');
     cardBack.style.backgroundImage = `url(../dist/assets/${Math.round(index / 2)}.jpg)`;
   }
 
   flip(): void {
     this.flipped = !this.flipped;
     if (this.flipped) {
-      this.htmlElement.classList.add('flipped');
+      this.card.classList.add('flipped');
     } else {
-      this.htmlElement.classList.remove('flipped');
+      this.card.classList.remove('flipped');
     }
   }
 
