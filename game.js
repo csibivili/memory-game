@@ -1,4 +1,4 @@
-class Game {
+export default class Game {
   static pictures = [];
   static setOrder() {
     this.pictures = new Array(16)
@@ -11,5 +11,3 @@ class Game {
     return this.pictures.find((o) => o.pictureId == id);
   }
 }
-
-module.exports = Game;
