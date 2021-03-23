@@ -1,5 +1,14 @@
 import './card.css';
 
+export const template = () => `
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front"></div>
+    <div class="flip-card-back"></div>
+  </div>
+</div>
+`;
+
 export class Card {
   private flipped: boolean = false;
   private card: HTMLDivElement = null;

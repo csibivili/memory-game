@@ -1,4 +1,4 @@
-import { Card } from '../card/Card';
+import { Card, template } from '../card/Card';
 
 import './board.css';
 
@@ -33,14 +33,19 @@ export class Board {
   }
 
   private renderCards(): void {
-    const cardElement: HTMLDivElement = document.querySelector('.flip-card');
-    for (let index: number = 0; index < 15; index++) {
-      const clone: Node = cardElement.cloneNode(true);
-      this.board.appendChild(clone);
+    for (let index: number = 0; index < 16; index++) {
+      this.board.appendChild(this.htmlToElement(template()));
     }
     const cards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.flip-card');
     cards.forEach((c, i) => {
       this.cards.push(new Card(cards[i], i));
     });
+  }
+
+  private htmlToElement(html: string): Node {
+    var template = document.createElement('template');
+    html = html.trim(); // Never return a text node of whitespace as the result
+    template.innerHTML = html;
+    return template.content.firstChild;
   }
 }
