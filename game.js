@@ -1,13 +1,13 @@
 export default class Game {
   static pictures = [];
-  static setOrder() {
+  static setOrder(cardIds) {
     this.pictures = new Array(16)
       .fill(0)
-      .map((_, i) => ({ order: i + 1, sort: Math.random() }))
+      .map((_, i) => ({ order: i, sort: Math.random() }))
       .sort((a, b) => a.sort - b.sort)
-      .map((o, i) => ({ order: o.order, pictureId: i }));
+      .map((o, i) => ({ order: o.order, cardId: cardIds[i], pictureId: Math.round((i + 1) / 2) }));
   }
-  static getOrderById(id) {
-    return this.pictures.find((o) => o.pictureId == id);
+  static getOrderById(order) {
+    return this.pictures.find((p) => p.order === Number(order));
   }
 }

@@ -13,34 +13,40 @@ export class Card {
   private flipped: boolean = false;
   private card: HTMLDivElement = null;
   private id: number;
+  private order: number;
 
-  constructor(card: HTMLDivElement, id: number) {
+  constructor(card: HTMLDivElement, order: number) {
     this.card = card;
-    this.id = id;
+    this.id = this.createRandomId();
+    this.order = order;
     this.card.addEventListener('click', () => {
       const http = new XMLHttpRequest();
       http.onreadystatechange = () => {
         if (http.readyState == 4 && http.status == 200) {
           const result = JSON.parse(http.response);
           if (!this.flipped) {
-            this.setImage(result.pictureId + 1);
+            this.setImage(result.pictureId);
           }
           this.flip();
         }
       };
-      http.open('GET', `/api/getOrderByPictureId/${this.id}`, true);
+      http.open('GET', `/api/getPictureByOrder/${this.order}`, true);
       http.setRequestHeader('Content-Type', 'application/json');
       http.send();
     });
   }
 
-  setOrder(order: number): void {
-    this.card.style.order = String(order);
+  getId(): number {
+    return this.id;
+  }
+
+  getFlipped(): boolean {
+    return this.flipped;
   }
 
   setImage(index: number): void {
     const cardBack: HTMLDivElement = this.card.querySelector('.flip-card-back');
-    cardBack.style.backgroundImage = `url(assets/${Math.round(index / 2)}.jpg)`;
+    cardBack.style.backgroundImage = `url(assets/${index}.jpg)`;
   }
 
   flip(): void {
@@ -52,7 +58,11 @@ export class Card {
     }
   }
 
-  getFlipped(): boolean {
-    return this.flipped;
+  private createRandomId(): number {
+    return Number(
+      Math.floor(Math.random() * Date.now())
+        .toString()
+        .substring(0, 8)
+    );
   }
 }

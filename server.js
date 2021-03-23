@@ -6,15 +6,17 @@ const app = express();
 const port = 5000;
 
 app.use(express.static('client/dist', { index: false }));
+app.use(express.json());
 
-app.get('/api/shuffle', (_, res) => {
-  Game.setOrder();
-  res.send({ message: 'shuffled', order: Game.pictures.map((p) => p.order) });
+app.post('/api/shuffle', (req, res) => {
+  const { cardIds } = req.body;
+  Game.setOrder(cardIds);
+  res.send(Game.pictures.map((p) => p.order));
 });
 
-app.get('/api/getOrderByPictureId/:id', (req, res) => {
-  const { id } = req.params;
-  const result = Game.getOrderById(id);
+app.get('/api/getPictureByOrder/:order', (req, res) => {
+  const { order } = req.params;
+  const result = Game.getOrderById(order);
   res.send(result);
 });
 

@@ -17,15 +17,12 @@ export class Board {
 
   shuffle(): void {
     const http = new XMLHttpRequest();
-    http.onreadystatechange = () => {
-      if (http.readyState == 4 && http.status == 200) {
-        const response = JSON.parse(http.response);
-        this.cards.forEach((c, i) => c.setOrder(response.order[i]));
-      }
+    http.onload = () => {
+      //start game
     };
-    http.open('GET', '/api/shuffle', true);
+    http.open('POST', '/api/shuffle', true);
     http.setRequestHeader('Content-Type', 'application/json');
-    http.send();
+    http.send(JSON.stringify({ cardIds: this.cards.map((c) => c.getId()) }));
   }
 
   flip(): void {
@@ -38,7 +35,7 @@ export class Board {
     }
     const cards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.flip-card');
     cards.forEach((c, i) => {
-      this.cards.push(new Card(cards[i], i));
+      this.cards.push(new Card(c, i));
     });
   }
 
