@@ -1,13 +1,17 @@
+import { Game } from '../../services/Game';
 import { Card, template } from '../card/Card';
+import { IOccurance } from '../../interfaces/IOccurance';
 
 import './board.css';
 
 export class Board {
   private cards: Card[] = [];
   private board: HTMLElement = null;
+  private game: Game;
 
-  constructor() {
+  constructor(game: Game) {
     this.board = document.getElementById('board');
+    this.game = game;
   }
 
   initialize(): void {
@@ -25,8 +29,34 @@ export class Board {
     http.send(JSON.stringify({ cardIds: this.cards.map((c) => c.getId()) }));
   }
 
-  flip(): void {
-    this.cards.forEach((c) => c.flip());
+  checkPairs(): void {
+    const flippedCards: Card[] = this.cards.filter((c) => c.getFlipped());
+    let pair: IOccurance = {};
+    for (const card of flippedCards) {
+      if (!pair[card.getPictureId()]) {
+        pair[card.getPictureId()] = 1;
+      } else {
+        pair[card.getPictureId()]++;
+      }
+    }
+    for (const [key, value] of Object.entries(pair)) {
+      if (value === 2) {
+        flippedCards.filter((c) => c.getPictureId() === Number(key)).forEach((c) => c.setFound());
+      }
+    }
+    this.game.restrictStep();
+    setTimeout(() => {
+      this.flipCards();
+      this.game.allowStep();
+    }, 2000);
+  }
+
+  flipCards(): void {
+    this.cards
+      .filter((c) => !c.getFound() && c.getFlipped())
+      .forEach((c) => {
+        c.flip();
+      });
   }
 
   private renderCards(): void {
@@ -35,13 +65,13 @@ export class Board {
     }
     const cards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.flip-card');
     cards.forEach((c, i) => {
-      this.cards.push(new Card(c, i));
+      this.cards.push(new Card(c, i, this.game));
     });
   }
 
   private htmlToElement(html: string): Node {
     var template = document.createElement('template');
-    html = html.trim(); // Never return a text node of whitespace as the result
+    html = html.trim();
     template.innerHTML = html;
     return template.content.firstChild;
   }

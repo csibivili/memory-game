@@ -1,3 +1,4 @@
+import { Game } from '../../services/Game';
 import './card.css';
 
 export const template = () => `
@@ -11,28 +12,36 @@ export const template = () => `
 
 export class Card {
   private flipped: boolean = false;
-  private card: HTMLDivElement = null;
+  private found: boolean = false;
+
+  private card: HTMLDivElement;
   private id: number;
   private order: number;
+  private game: Game;
+  private pictureId: number;
 
-  constructor(card: HTMLDivElement, order: number) {
-    this.card = card;
+  constructor(card: HTMLDivElement, order: number, game: Game) {
     this.id = this.createRandomId();
+    this.card = card;
     this.order = order;
+    this.game = game;
     this.card.addEventListener('click', () => {
-      const http = new XMLHttpRequest();
-      http.onreadystatechange = () => {
-        if (http.readyState == 4 && http.status == 200) {
-          const result = JSON.parse(http.response);
-          if (!this.flipped) {
-            this.setImage(result.pictureId);
-          }
-          this.flip();
+      if (!this.flipped && this.game.getCanStep()) {
+        this.flip();
+        if (!this.pictureId) {
+          const http = new XMLHttpRequest();
+          http.onload = () => {
+            const result = JSON.parse(http.response);
+            this.pictureId = result.pictureId;
+            this.step();
+          };
+          http.open('GET', `/api/getPictureByOrder/${this.order}`, true);
+          http.setRequestHeader('Content-Type', 'application/json');
+          http.send();
+        } else {
+          this.step();
         }
-      };
-      http.open('GET', `/api/getPictureByOrder/${this.order}`, true);
-      http.setRequestHeader('Content-Type', 'application/json');
-      http.send();
+      }
     });
   }
 
@@ -42,6 +51,18 @@ export class Card {
 
   getFlipped(): boolean {
     return this.flipped;
+  }
+
+  getPictureId(): number {
+    return this.pictureId;
+  }
+
+  setFound(): void {
+    this.found = true;
+  }
+
+  getFound(): boolean {
+    return this.found;
   }
 
   setImage(index: number): void {
@@ -64,5 +85,10 @@ export class Card {
         .toString()
         .substring(0, 8)
     );
+  }
+
+  private step(): void {
+    this.setImage(this.pictureId);
+    this.game.increaseNrOfSteps();
   }
 }

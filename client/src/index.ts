@@ -1,6 +1,7 @@
-import { Board } from './components/board/Board';
+import { Game } from './services/Game';
 
 import './style.css';
 
-const board = new Board();
-board.initialize();
+window.addEventListener('DOMContentLoaded', () => {
+  new Game();
+});
