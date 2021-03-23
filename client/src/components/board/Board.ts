@@ -1,4 +1,6 @@
-import { Card } from './Card';
+import { Card } from '../card/Card';
+
+import './board.css';
 
 export class Board {
   private cards: Card[] = [];

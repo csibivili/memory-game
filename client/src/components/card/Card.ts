@@ -1,3 +1,5 @@
+import './card.css';
+
 export class Card {
   private flipped: boolean = false;
   private card: HTMLDivElement = null;
